@@ -795,8 +795,12 @@ namespace YARG.Gameplay.Player
 
             var kickHasLane = NumberOfDedicatedKickLanes > 0;
 
+            // When overhits are not penalized, ignore them entirely (no visual/audio feedback).
+            bool isOverhit = !wasNoteHit && !wasOverhitInLane;
+            bool ignoreOverhit = isOverhit && (EngineParams is null || !EngineParams.PenalizeOverhit);
+
             // Update last hit times for fret flashing animation
-            if ((action is not DrumsAction.Kick || kickHasLane) && !wasOverhitInLane)
+            if ((action is not DrumsAction.Kick || kickHasLane) && !wasOverhitInLane && !ignoreOverhit)
             {
                 // Play the correct hit animation based on dynamics
                 Fret.AnimType animType = Fret.AnimType.CorrectNormal;
@@ -822,6 +826,12 @@ namespace YARG.Gameplay.Player
                 {
                     PlayDrumSoundEffect(action, velocity);
                 }
+                return;
+            }
+
+            // When overhits are disabled, skip all miss feedback (sound/animation).
+            if (ignoreOverhit)
+            {
                 return;
             }
 
