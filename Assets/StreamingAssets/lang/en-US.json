@@ -2665,6 +2665,10 @@
                 "EnableLanes": {
                     "Name": "Enable Trill/Tremolo Lanes",
                     "Description": "If enabled, the game honors charted trill/tremolo lanes."
+                },
+                "PenalizeOverhit": {
+                    "Name": "Penalize Overhit",
+                    "Description": "If disabled, overhitting (hitting a pad with no matching note) does not reset your combo or damage the Rock Meter."
                 }
             },
             "HighwayPreset" : {
